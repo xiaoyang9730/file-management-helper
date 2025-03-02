@@ -1,5 +1,12 @@
 param ( [string]$gt, [string]$cmp, [string]$o )
 
+if (($gt -eq "") -or ($cmp -eq "") -or ($o -eq "")) {
+    $scriptName = $MyInvocation.MyCommand.Name
+    Write-Output "Usage:`r`n"
+    Write-Output "    .\$scriptName -gt <gt folder> -cmp <cmp folder> -o <output folder>`r`n"
+    exit 0
+}
+
 $gt = Resolve-Path $gt
 $cmp = Resolve-Path $cmp
 
@@ -55,4 +62,5 @@ if ($userInput -eq "y") {
 }
 
 # Revision
+#   v0.1.1: Add help message
 #   v0.1.0: Initial commit

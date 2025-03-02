@@ -1,5 +1,12 @@
 param ( [string]$fa, [string]$fb )
 
+if (($fa -eq "") -or ($fb -eq "")) {
+    $scriptName = $MyInvocation.MyCommand.Name
+    Write-Output "Usage:`r`n"
+    Write-Output "    .\$scriptName -fa <folder a> -fb <folder b>`r`n"
+    exit 0
+}
+
 $folderA = Resolve-Path $fa
 $folderB = Resolve-Path $fb
 
@@ -44,4 +51,5 @@ foreach ($relativePath in $mismatchedFiles.Keys) {
 }
 
 # Revision
+#   v0.1.1: Add help message
 #   v0.1.0: Initial commit
