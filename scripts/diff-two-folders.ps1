@@ -1,9 +1,9 @@
-param ( [string]$fa, [string]$fb )
+param ( [string]$fa, [string]$fb, [switch]$aOnly )
 
 if (($fa -eq "") -or ($fb -eq "")) {
     $scriptName = $MyInvocation.MyCommand.Name
     Write-Output "Usage:`r`n"
-    Write-Output "    .\$scriptName -fa <folder a> -fb <folder b>`r`n"
+    Write-Output "    .\$scriptName -fa <folder a> -fb <folder b> [-aOnly]`r`n"
     exit 0
 }
 
@@ -39,7 +39,9 @@ function Compare-Folder {
 }
 
 Compare-Folder -sourceFolder $folderA -targetFolder $folderB
-Compare-Folder -sourceFolder $folderB -targetFolder $folderA
+if (-not $aOnly) {
+    Compare-Folder -sourceFolder $folderB -targetFolder $folderA
+}
 
 Write-Output "File size mismatched："
 foreach ($relativePath in $mismatchedFiles.Keys) {
@@ -51,5 +53,6 @@ foreach ($relativePath in $mismatchedFiles.Keys) {
 }
 
 # Revision
+#   v0.1.2: Add -aOnly switch, to bypass info from folderB
 #   v0.1.1: Add help message
 #   v0.1.0: Initial commit

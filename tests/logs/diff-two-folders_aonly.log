@@ -1,0 +1,13 @@
+Files only in C:\dev\powershell\file-management-helper\tests\diff-two-folders\folder1:
+    C:\dev\powershell\file-management-helper\tests\diff-two-folders\folder1\f03_only_in_folder1
+        size: 20 bytes
+    C:\dev\powershell\file-management-helper\tests\diff-two-folders\folder1\sub4\f41_only_in_folder1
+        size: 21 bytes
+
+File size mismatched：
+    \sub1\f14_modified:
+        size(a): 13 bytes
+        size(b):  bytes
+    \f04_modified:
+        size(a): 4 bytes
+        size(b):  bytes

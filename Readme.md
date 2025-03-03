@@ -5,6 +5,12 @@
     -fa .\tests\diff-two-folders\folder1 `
     -fb .\tests\diff-two-folders\folder2 `
     > .\tests\logs\diff-two-folders.log
+
+.\scripts\diff-two-folders.ps1 `
+    -fa .\tests\diff-two-folders\folder1 `
+    -fb .\tests\diff-two-folders\folder2 `
+    -aOnly `
+    > .\tests\logs\diff-two-folders_aonly.log
 ```
 
 # collect-matching-files
