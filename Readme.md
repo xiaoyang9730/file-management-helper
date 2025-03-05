@@ -9,3 +9,9 @@
 ```
 .\tests\test-diff-two-folders.ps1
 ```
+
+# find-duplicated-files
+
+```
+.\tests\test-find-duplicated-files.ps1
+```
