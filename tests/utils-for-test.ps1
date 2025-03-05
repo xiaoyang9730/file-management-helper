@@ -45,6 +45,6 @@ function CreateTestFiles {
     foreach ($file in $files) {
         $file = Join-Path -Path $dir -ChildPath $file
         New-Item -ItemType File -Path $file -Force | Out-Null
-        Set-Content -Path $file -Value $file
+        Set-Content -Path $file -Value (Split-Path -Path $file -Leaf)
     }
 }

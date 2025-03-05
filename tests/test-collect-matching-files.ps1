@@ -19,20 +19,7 @@ if ($null -eq $test) {
 $Reference = Join-Path -Path $test.Dir -ChildPath "Reference"
 $Target = Join-Path -Path $test.Dir -ChildPath "Target"
 
-function CreateTestFilesV2 {
-    param (
-        [Parameter(Mandatory=$true, Position=0)] [string]$dir,
-        [Parameter(Mandatory=$true, Position=1)] [string[]]$files
-    )
-
-    foreach ($file in $files) {
-        $file = Join-Path -Path $dir -ChildPath $file
-        New-Item -ItemType File -Path $file -Force | Out-Null
-        Set-Content -Path $file -Value (Split-Path -Path $file -Leaf)
-    }
-}
-
-CreateTestFilesV2 $Reference @(
+CreateTestFiles $Reference @(
     "f01",
     "f02",
     "f03",
@@ -44,7 +31,7 @@ CreateTestFilesV2 $Reference @(
     "folder2\f23"
 )
 
-CreateTestFilesV2 $Target @(
+CreateTestFiles $Target @(
     "f01",
     "f02",
     "f03",
