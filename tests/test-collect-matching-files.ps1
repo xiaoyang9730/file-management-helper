@@ -16,10 +16,23 @@ if ($null -eq $test) {
 # Setup
 #--------------------------------------
 
-$gt = Join-Path -Path $test.Dir -ChildPath "gt"
-$cmp = Join-Path -Path $test.Dir -ChildPath "cmp"
+$Reference = Join-Path -Path $test.Dir -ChildPath "Reference"
+$Target = Join-Path -Path $test.Dir -ChildPath "Target"
 
-CreateTestFiles $gt @(
+function CreateTestFilesV2 {
+    param (
+        [Parameter(Mandatory=$true, Position=0)] [string]$dir,
+        [Parameter(Mandatory=$true, Position=1)] [string[]]$files
+    )
+
+    foreach ($file in $files) {
+        $file = Join-Path -Path $dir -ChildPath $file
+        New-Item -ItemType File -Path $file -Force | Out-Null
+        Set-Content -Path $file -Value (Split-Path -Path $file -Leaf)
+    }
+}
+
+CreateTestFilesV2 $Reference @(
     "f01",
     "f02",
     "f03",
@@ -31,18 +44,23 @@ CreateTestFiles $gt @(
     "folder2\f23"
 )
 
-CreateTestFiles $cmp @(
+CreateTestFilesV2 $Target @(
     "f01",
     "f02",
     "f03",
     "f04",
-    "random1\f11",
-    "random1\f12",
-    "random2\f13",
-    "folder3\f21",
-    "folder3\f22",
-    "folder4\f23",
-    "folder4\f24"
+    "v1\random\f11",
+    "v1\random\f12",
+    "v1\random\f13",
+    "v2\random\f11",
+    "v2\random\f12",
+    "v2\random\f13",
+    "v3\random\f11",
+    "v3\random\f12",
+    "v3\random\f13",
+    "v4\random\f11",
+    "v4\random\f12",
+    "v4\random\f13"
 )
 
 Write-Host "Test folders are set. Start testing..."
@@ -51,9 +69,9 @@ Write-Host "Test folders are set. Start testing..."
 # Invoke
 #--------------------------------------
 
-$o = Join-Path -Path $test.Dir -ChildPath "collected"
-$log = Join-Path -Path $test.Dir -ChildPath "$scriptFilename.log"
-& $test.scriptPath -gt $gt -cmp $cmp -o $o > $log
+$Output = Join-Path -Path $test.Dir -ChildPath "Collected"
+$logPath = Join-Path -Path $test.Dir -ChildPath "$scriptFilename.log"
+& $test.scriptPath -Reference $Reference -Target $Target -Output $Output > $logPath
 
 Write-Host "Test finished"
-Write-Host "Log file is at $log"
+Write-Host "Log file is at $logPath"
